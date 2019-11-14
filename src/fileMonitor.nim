@@ -1,6 +1,6 @@
 import os, times
 
-let modifiedTime =
+const modifiedTime =
   proc(filePath: string): auto =
     os.getLastModificationTime(filePath).toUnix()
 

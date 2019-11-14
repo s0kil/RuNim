@@ -4,11 +4,16 @@ import fab
 import fileMonitor
 
 var sourceFileName: string
-var persist: bool
-var watch: bool
+# TODO : `persist` Ask User To Proceed With Compilation After File Change
+# var persist: bool
+var watch, silent: bool
 
-proc execNim(file: string) =
-  let command = "nim c -r --outdir:/tmp " & file
+proc execNim(file: string, silent: bool = false) =
+  var command: string
+  if silent == true:
+    command = "nim c --run --verbosity:0 --hints:off --outdir:/tmp " & file
+  else:
+    command = "nim c --run --outdir:/tmp " & file
   discard execShellCmd(command)
 
 var parser = initOptParser()
@@ -18,19 +23,20 @@ for kind, key, value in parser.getopt():
   of cmdLongOption, cmdShortOption:
     case key
     of "watch", "w": watch = true
-    of "persist", "p": persist = true
+    of "silent", "s": silent = true
+    # of "persist", "p": persist = true
   else: discard
 
 if sourceFileName == "":
   echo "Specify Nim Source File"
 elif watch:
-  execNim(sourceFileName)
+  execNim(sourceFileName, silent)
   fileMonitor(
     sourceFileName,
     callback =
       proc() =
         bold("RuNim: " & sourceFileName)
-        execNim(sourceFileName)
+        execNim(sourceFileName, silent)
   )
 else:
-  execNim(sourceFileName)
+  execNim(sourceFileName, silent)

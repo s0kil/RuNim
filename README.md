@@ -12,6 +12,14 @@ Or
 
 `runim main.nim --watch`
 
+### Silent Mode `--verbosity:0 --hints:off`
+
+`runim main.nim -s`
+
+Or
+
+`runim main.nim --watch --silent`
+
 ### Installation
 
 `nimble install https://github.com/s0kil/RuNim`
