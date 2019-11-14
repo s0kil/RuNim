@@ -12,4 +12,8 @@ Or
 
 `runim main.nim --watch`
 
+### Installation
+
+`nimble install https://github.com/s0kil/RuNim`
+
 #### Inspired By [runhaskell](https://helpmanual.io/help/runhaskell/)
